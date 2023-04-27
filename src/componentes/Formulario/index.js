@@ -7,29 +7,29 @@ import BotaoImagem from "../BotaoImagem";
 
 const Formulario = (props) => {
 
-  const manipularClique = (evento) => {
-    evento.preventDefault()
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = (evento) => {
-      const arquivo = evento.target.files[0];
-      if (arquivo) {
-        const leitor = new FileReader();
-        leitor.onload = (e) => {
-          const imagemSelecionada = e.target.result;
-          setImagem(imagemSelecionada);
-        };
-        leitor.readAsDataURL(arquivo);
-      }
-    };
-    input.click();
-  };
-
 const [nome, setNome] = useState('')
 const [cargo, setCargo] = useState('')
 const [imagem, setImagem] = useState('')
 const [time, setTime] = useState('')
+
+const manipularClique = (evento) => {
+  evento.preventDefault()
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+  input.onchange = (evento) => {
+    const arquivo = evento.target.files[0];
+    if (arquivo) {
+      const leitor = new FileReader();
+      leitor.onload = (e) => {
+        const imagemSelecionada = e.target.result;
+        setImagem(imagemSelecionada);
+      };
+      leitor.readAsDataURL(arquivo);
+    }
+  };
+  input.click();
+}
 
 const aoSalvar = (evento) =>{
   evento.preventDefault()
@@ -59,9 +59,7 @@ const aoSalvar = (evento) =>{
             <span>Clique no botão "Procurar" para selecionar uma imagem.</span>
           )}
         </div>
-        <BotaoImagem>
-        <button onClick={manipularClique}>Procurar</button>
-        </BotaoImagem>
+        <BotaoImagem onClick={manipularClique}/>
         <ListaSuspensa valor={time} aoAlterado={valor => setTime(valor)} label="Time" itens={props.times}/>
         <Botao>
           Criar Card
